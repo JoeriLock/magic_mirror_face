@@ -1,0 +1,50 @@
+<!--
+Todo:
+eiken van gezichts positie (only horziontal acces, should be done. vertical can be done with tilting the camera)
+Flip screen?
+Fade in
+
+-->
+
+<head>
+  <!-- Include Handsfree.js -->
+  <link rel="stylesheet" href="https://unpkg.com/handsfree@8.5.1/build/lib/assets/handsfree.css" />
+  <script src="https://unpkg.com/handsfree@8.5.1/build/lib/handsfree.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+
+<body style=background-color:black;>
+  <img id=shrek src="shrekmirror.jpg" width=350 style='position:fixed;'>
+  <img id=shrek_eye src="shrekmirror_eye.jpg" width=350 style='position:fixed; display:none;'>
+
+  <!-- Your code must be inside body as it applies classes to it -->
+
+  <script>
+    // Let's use handtracking and show the webcam feed with wireframes
+    const handsfree = new Handsfree({showDebug: false, weboji: true})
+    handsfree.start()
+
+    // Create a plugin named "logger" to show data on every frame
+    handsfree.use('logger', data => {
+      console.log(data.weboji.state.browsUp);
+      if(data.weboji.isDetected){
+        $("#shrek").css({
+          'margin-left': (data.weboji.translation[0])*100 + "%",
+          'margin-top': (1-data.weboji.translation[1])*90 + "%",
+        });
+        $("#shrek_eye").css({
+          'margin-left': (data.weboji.translation[0])*100 + "%",
+          'margin-top': (1-data.weboji.translation[1])*90 + "%",
+        });
+        if(data.weboji.state.browsUp == true){
+          $("#shrek_eye").show();
+          $("#shrek").hide();
+        }else{
+          $("#shrek_eye").hide();
+          $("#shrek").show();
+        }
+      }
+    })
+  </script>
+</body>

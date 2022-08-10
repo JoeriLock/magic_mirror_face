@@ -1,0 +1,93 @@
+<style>
+.imageContainer{
+  width: 100%;
+}
+#shrek{
+  margin-left: calc(50% - 300px);
+  margin-top: calc(50% - 500px);
+  animation: float 10s ease-in-out infinite;
+  position:fixed;
+  opacity: 1;
+
+}
+#shrek_eye{
+  margin-left: calc(50% - 300px);
+  margin-top: calc(50% - 500px);
+  animation: float 10s ease-in-out infinite;
+  position:fixed;
+  opacity: 0;
+}
+#ghost {
+  position: fixed;
+  margin-top: 30px;
+
+  animation: ghost 10s ease-in-out infinite;
+}
+
+@keyframes float {
+	0% {
+		transform: translatey(0px) skewY(0deg);
+	}
+  50% {
+		transform: translatey(-50%) rotate(0deg) scale(20%);
+	}
+	100% {
+		transform: translatey(0px) rotate(0deg);
+	}
+}
+@keyframes ghost {
+	0% {
+		transform: translatex(0px) skewY(0deg);
+	}
+  50% {
+		transform: translatex(300%);
+	}
+	100% {
+	}
+}
+
+
+}
+
+</style>
+
+<body style=background-color:black;>
+  <div class="imageContainer" style="">
+    <img id=shrek_eye src="shrekmirror_eye.jpg">
+    <img id=shrek src="shrekmirror.jpg">
+    <!-- <img id=ghost src="cartoon_ghost.jpg" width=100> -->
+  </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+  function randRange(data) {
+       var newTime = data[Math.floor(data.length * Math.random())];
+       return newTime;
+  }
+
+  function toggleSomething() {
+         var timeArray = new Array(2000, 3000, 1500, 2500, 20000, 30000, 10000, 15000);
+
+         // do stuff, happens to use jQuery here (nothing else does)
+         $("#box").toggleClass("visible");
+
+         clearInterval(timer);
+         timer = setInterval(toggleSomething, randRange(timeArray));
+  }
+
+  function toggleEyes(){
+    if($("#shrek").css("opacity") == 1){
+      $("#shrek_eye").animate({opacity: 1}, 1000);
+      $("#shrek").animate({opacity: 0}, 1000);
+    }else{
+      $("#shrek_eye").animate({opacity: 0}, 1000);
+      $("#shrek").animate({opacity: 1}, 1000);
+    }
+  }
+
+  $( document ).ready(function() {
+    var timer = setInterval(toggleEyes, 1000);
+
+  });
+</script>
+</body>
